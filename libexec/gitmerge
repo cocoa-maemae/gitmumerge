@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -e
+
+OPT=`getopt -o th:v -l target, help:,version -- "$@"`
+case "$1" in
+  -t | --target) target_branch=$2
+  ;;
+  -h | --help) command="gitmerge-help"
+  ;;
+  -v | --version) command="gitmerge-version"
+  ;;
+  *) command="gitmerge-validation"
+  ;;
+esac 
+
+echo "${command}"
+
+exec "~/.gitmerge/libexec/${command}"
+
