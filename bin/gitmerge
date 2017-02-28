@@ -1,1 +1,1 @@
-.gitmerge/libexec/gitmerge $@
+~/.gitmerge/libexec/gitmerge $@
