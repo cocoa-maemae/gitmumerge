@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -ex
+
+target_branch=$1
+shift
+merge_branches=($@)
+
+git pull
+
+merge_to_branch_from_target() {
+  merge_branch=$1
+  git checkout ${merge_branch}
+  set +e
+  echo "Merge ${target_branch} to ${merge_branch}"
+  git merge --no-ff ${target_branch}
+  set -e
+}
+
+merge_to_target_from_branch() {
+  merge_branch=$1
+  git checkout ${target_branch}
+  set +e
+  echo "Merge ${merge_branch} to ${target_branch}"
+  git merge --no-ff ${merge_branch}
+  set -e
+}
+
+for merge_branch in "${merge_branches[@]}"; do
+  merge_to_branch_from_target ${merge_branch}
+  merge_to_target_from_branch ${merge_branch}
+done
+
+git checkout ${target_branch}
+git push origin ${target_branch}
+

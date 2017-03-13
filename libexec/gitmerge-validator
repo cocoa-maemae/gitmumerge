@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -e
+
+args=$@
+is_error=0
+error_msg='invalid options'
+
+if [ $# = 0 ]; then
+  is_error=1
+fi
+
+if [ ${is_error} = 1 ]; then
+  echo "${error_msg}"
+  exit 0
+fi
+
+exec ~/.gitmerge/libexec/gitmerge-parser $@

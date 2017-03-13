@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -e
+
+OPT=`getopt -o tmh:v -l target-branch, merge-branches, help:,version -- "$@"`
+merge_branches=()
+while [ "$1" != "" ]; do
+  case "$1" in
+  -t | --target-branch)
+    target_branch=$2
+    shift 2
+  ;;
+  -m | --merge-branches)
+    merge_branches+=("$2")
+    shift
+  ;;
+  -h | --help)
+    command="gitmerge-help"
+    shift
+  ;;
+  -v | --version)
+    command="gitmerge-version"
+    shift
+  ;;
+  *)
+    merge_branches+=("$2")
+    command="gitmerge-executor"
+    shift
+  ;;
+  esac 
+done
+
+#echo ${merge_branches[@]}
+if [ -z ${command} ]; then
+  echo "error Usage:"
+else
+  exec "~/.gitmerge/libexec/${command}" ${target_branch} ${merge_branches[@]}
+fi
+
+exit 1
