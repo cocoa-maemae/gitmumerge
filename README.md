@@ -6,7 +6,9 @@ Currently works on only bash.
 
 # Install
 git clone git@github.com:cocoamaemae/gitmerge.git ~/.gitmerge
+
 echo 'export PATH="$HOME/.gitmerge/bin/gitmerge:$PATH"' >> ~/.bash_profile
+
 source ~/.bash_profile
 
 # Usage
