@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -e
+
+OPT=`getopt -o dch:v -l destination-branch, candidate-branches, help:,version -- "$@"`
+merge_branches=()
+while [ "$1" != "" ]; do
+  case "$1" in
+  -d | --destination-branch)
+    destination_branch=$2
+    shift 2
+  ;;
+  -c | --candidate-branches)
+    candidate_branches+=("$2")
+    shift
+  ;;
+  -h | --help)
+    command="gitmerge-helper"
+    shift
+  ;;
+  -v | --version)
+    command="gitmerge-version"
+    shift
+  ;;
+  *)
+    candidate_branches+=("$2")
+    command="gitmerge-executor"
+    shift
+  ;;
+  esac
+done
+
+if [ -z ${command} ]; then
+  echo "error Usage:"
+else
+  exec "~/.gitmerge/libexec/${command}" ${destination_branch} ${candidate_branches[@]}
+fi
+
+exit 1

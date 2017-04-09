@@ -1,0 +1,79 @@
+#!/bin/bash
+set -e
+
+destination_branch=$1
+shift
+candidate_branches=($@)
+
+merge_to_candidate_from_destination() {
+  candidate_branch=$1
+  git checkout ${candidate_branch}
+  set +e
+  git merge --no-ff ${destination_branch}
+  set -e
+}
+
+merge_to_destination_from_candidate() {
+  candidate_branch=$1
+  git checkout ${destination_branch}
+  set +e
+  echo "Merge to ${destination_branch} from ${candidate_branch}"
+  git merge --no-ff ${candidate_branch}
+  set -e
+}
+
+for candidate_branch in "${candidate_branches[@]}"; do
+  while true; do
+    read -p "Do you merge into ${candidate_branch} from ${destination_branch} [Y/n]" answer
+    case $answer in
+    '' | [Yy]* )
+      merge_to_candidate_from_destination ${candidate_branch}
+      break;
+      ;;
+    [Nn]* )
+      set -e
+      exit 1
+      break;
+      ;;
+    * )
+      echo Please answer YES or NO.
+    esac
+  done;
+
+  while true; do
+    read -p "Do you merge into ${destination_branch} from ${candidate_branch} [Y/n]" answer
+    case $answer in
+    '' | [Yy]* )
+      merge_to_destination_from_candidate ${candidate_branch}
+      break;
+      ;;
+    [Nn]* )
+      set -e
+      exit 1
+      break;
+      ;;
+    * )
+      echo Please answer Y or N
+    esac
+  done;
+done
+
+git checkout ${destination_branch}
+
+# git push
+# in the current version, it's not automatic
+#while true; do
+#  read -p "Do you push local ${destination_branch} to remote ${destination_branch} [Y/n]" answer
+#  case $answer in
+#  '' | [Yy]* )
+#    git push origin ${destination_branch}
+#    break;
+#    ;;
+#  [Nn]* )
+#    echo exit
+#    break;
+#    ;;
+#  * )
+#    echo Please answer Y or N
+#  esac
+#done;
