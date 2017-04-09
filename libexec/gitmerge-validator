@@ -2,16 +2,73 @@
 set -e
 
 args=$@
-is_error=0
-error_msg='invalid options'
+common_msg='Please see help (execute gitmerge with -h or --help)'
 
+# the number of options check
 if [ $# = 0 ]; then
-  is_error=1
+  echo "No option is specified. ${common_msg}"
+  exit 1
 fi
 
-if [ ${is_error} = 1 ]; then
-  echo "${error_msg}"
-  exit 0
+# first option check
+if [ $1 != '-h' -a $1 != '--help' -a $1 != '-v' -a $1 != '--version' -a $1 != '-d' -a $1 != "--destination-branch" ]; then
+  echo "Invalid option $1. ${common_msg}"
+  exit 1
 fi
 
-exec ~/.gitmerge/libexec/gitmerge-parser $@
+# help option check
+if [ $1 = '-h' -o $1 = '--help' ]; then
+  if [ -n "$2" ]; then
+    echo "Invalid options $2. ${common_msg}"
+    exit 1
+  fi
+fi
+
+# version option check
+if [ $1 = '-v' -o $1 = '--version' ]; then
+  if [ -n "$2" ]; then
+    echo "Invalid option $2. ${common_msg}"
+    exit 1
+  fi
+fi
+
+# -d(--destination-branch) option check
+if [ $1 = '-d' -o $1 = '--destination' ]; then
+  destination_branch=$2
+  all_git_branches=`git branch -a`
+  case ${all_git_branches} in
+    *"origin/${destination_branch}"*)
+      # The branch which is specified after -d(--destination-branch) exists
+      shift 2
+
+      # -c(--candidate) opion check
+      if [ $1 = '-c' -o $1 = '--candidate-branches' ]; then
+        # remove -c(--candidate-branches)
+        shift
+        while [ "$1" != "" ]; do
+          candidate_branch=$1
+          case ${all_git_branches} in
+            *"origin/${candidate_branch}"*)
+              # The branch which is specified after -c(--candidate-branches) exists
+              shift
+            ;;
+            *)
+              # invalid case
+              echo "The branch ${candidate_branch} does not exist."
+              exit 1
+            ;;
+          esac
+        done
+      else
+        echo "Invalid option $1. ${common_msg}"
+      fi
+    ;;
+    *)
+      # invalid case
+      echo "The branch ${destination_branch} does not exist."
+      exit 1
+    ;;
+  esac
+fi
+
+exec ~/.gitmerge/libexec/gitmerge-parser $args

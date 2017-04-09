@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 set -e
 
-OPT=`getopt -o tmh:v -l target-branch, merge-branches, help:,version -- "$@"`
+OPT=`getopt -o dch:v -l destination-branch, candidate-branches, help:,version -- "$@"`
 merge_branches=()
 while [ "$1" != "" ]; do
   case "$1" in
-  -t | --target-branch)
-    target_branch=$2
+  -d | --destination-branch)
+    destination_branch=$2
     shift 2
   ;;
-  -m | --merge-branches)
-    merge_branches+=("$2")
+  -c | --candidate-branches)
+    candidate_branches+=("$2")
     shift
   ;;
   -h | --help)
-    command="gitmerge-help"
+    command="gitmerge-helper"
     shift
   ;;
   -v | --version)
@@ -22,18 +22,17 @@ while [ "$1" != "" ]; do
     shift
   ;;
   *)
-    merge_branches+=("$2")
+    candidate_branches+=("$2")
     command="gitmerge-executor"
     shift
   ;;
-  esac 
+  esac
 done
 
-#echo ${merge_branches[@]}
 if [ -z ${command} ]; then
   echo "error Usage:"
 else
-  exec "~/.gitmerge/libexec/${command}" ${target_branch} ${merge_branches[@]}
+  exec "~/.gitmerge/libexec/${command}" ${destination_branch} ${candidate_branches[@]}
 fi
 
 exit 1

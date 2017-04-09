@@ -1,2 +1,2 @@
-version=beta
+version=0.0.1beta
 echo ${version}
