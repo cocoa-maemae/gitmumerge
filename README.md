@@ -12,6 +12,7 @@ echo 'export PATH="$HOME/.gitmerge/bin:$PATH"' >> ~/.bash_profile
 source ~/.bash_profile
 
 //check version
+
 gitmerge -v
 
 # Usage
