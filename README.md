@@ -2,7 +2,7 @@
 Simple wrapper of git clinent. It makes merging git branches easier.
 
 # Requirements
-Currently works on only bash.
+Currently works only on bash.
 
 # Install
 git clone https://github.com/cocoamaemae/gitmerge ~/.gitmerge
