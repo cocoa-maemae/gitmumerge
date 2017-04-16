@@ -5,7 +5,7 @@ destination_branch=$1
 shift
 candidate_branches=($@)
 
-merge_to_candidate_from_destination() {
+merge_into_candidate_from_destination() {
   candidate_branch=$1
   git checkout ${candidate_branch}
   set +e
@@ -13,21 +13,22 @@ merge_to_candidate_from_destination() {
   set -e
 }
 
-merge_to_destination_from_candidate() {
+merge_into_destination_from_candidate() {
   candidate_branch=$1
   git checkout ${destination_branch}
   set +e
-  echo "Merge to ${destination_branch} from ${candidate_branch}"
   git merge --no-ff ${candidate_branch}
   set -e
 }
 
 for candidate_branch in "${candidate_branches[@]}"; do
   while true; do
-    read -p "Do you merge into ${candidate_branch} from ${destination_branch} [Y/n]" answer
+    dest=`echo -e "\e[1;31;40m${destination_branch}\e[00m"`
+    cand=`echo -e "\e[1;31;40m${candidate_branch}\e[00m"`
+    read -p "Do you merge into ${cand} from ${dest} [Y/n]" answer
     case $answer in
     '' | [Yy]* )
-      merge_to_candidate_from_destination ${candidate_branch}
+      merge_into_candidate_from_destination ${candidate_branch}
       break;
       ;;
     [Nn]* )
@@ -41,10 +42,12 @@ for candidate_branch in "${candidate_branches[@]}"; do
   done;
 
   while true; do
-    read -p "Do you merge into ${destination_branch} from ${candidate_branch} [Y/n]" answer
+    dest=`echo -e "\e[1;31;40m${destination_branch}\e[00m"`
+    cand=`echo -e "\e[1;31;40m${candidate_branch}\e[00m"`
+    read -p "Do you merge into ${dest} from ${cand} [Y/n]" answer
     case $answer in
     '' | [Yy]* )
-      merge_to_destination_from_candidate ${candidate_branch}
+      merge_into_destination_from_candidate ${candidate_branch}
       break;
       ;;
     [Nn]* )
@@ -59,7 +62,7 @@ for candidate_branch in "${candidate_branches[@]}"; do
 done
 
 git checkout ${destination_branch}
-
+echo -e "\e[1;31mMerging branches has done\e[00m"
 # git push
 # in the current version, it's not automatic
 #while true; do
