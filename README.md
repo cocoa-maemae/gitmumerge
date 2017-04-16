@@ -14,5 +14,12 @@ source ~/.bash_profile
 # Usage
 gitmerge -d branch -c branch1 branch2 ....
 
+### More details
+(Japanese)
+http://qiita.com/cocoa_maemae/items/5908e3b3699c9cea4e8b
+
+(English)
+TBD
+
 # Liscense
 MIT
