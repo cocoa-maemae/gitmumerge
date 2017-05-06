@@ -21,33 +21,35 @@ merge_into_destination_from_candidate() {
   set -e
 }
 
-for candidate_branch in "${candidate_branches[@]}"; do
+# execute merge
+# $1 a candidate branch name
+# $2 merge direction
+#    0:from a destination branch to a candidate branch
+#    1:from a candidate branch to a destination branch
+exec_merge() {
+  candidate_branch=$1
+  merge_direction=$2
+  dest=`echo -e "\e[1;31;40m${destination_branch}\e[00m"`
+  cand=`echo -e "\e[1;31;40m${candidate_branch}\e[00m"`
   while true; do
-    dest=`echo -e "\e[1;31;40m${destination_branch}\e[00m"`
-    cand=`echo -e "\e[1;31;40m${candidate_branch}\e[00m"`
-    read -p "Do you merge into ${cand} from ${dest} [Y/n]" answer
-    case $answer in
-    '' | [Yy]* )
-      merge_into_candidate_from_destination ${candidate_branch}
-      break;
-      ;;
-    [Nn]* )
-      set -e
-      exit 1
-      break;
-      ;;
-    * )
-      echo Please answer YES or NO.
-    esac
-  done;
+    if [ $merge_direction -eq 0 ];then
+      inq="Do you merge into ${cand} from ${dest} [Y/n]: "
+    fi
 
-  while true; do
-    dest=`echo -e "\e[1;31;40m${destination_branch}\e[00m"`
-    cand=`echo -e "\e[1;31;40m${candidate_branch}\e[00m"`
-    read -p "Do you merge into ${dest} from ${cand} [Y/n]" answer
+    if [ $merge_direction -eq 1 ];then
+      inq="Do you merge into ${dest} from ${cand} [Y/n]: "
+    fi
+
+    read -p "$inq" answer
     case $answer in
     '' | [Yy]* )
-      merge_into_destination_from_candidate ${candidate_branch}
+      if [ $merge_direction -eq 0 ];then
+        merge_into_candidate_from_destination ${candidate_branch}
+      fi
+
+      if [ $merge_direction -eq 1 ];then
+        merge_into_destination_from_candidate ${candidate_branch}
+      fi
       break;
       ;;
     [Nn]* )
@@ -59,24 +61,12 @@ for candidate_branch in "${candidate_branches[@]}"; do
       echo Please answer Y or N
     esac
   done;
+}
+
+for candidate_branch in "${candidate_branches[@]}"; do
+  exec_merge ${candidate_branch} 0
+  exec_merge ${candidate_branch} 1
 done
 
 git checkout ${destination_branch}
 echo -e "\e[1;31mMerging branches has done\e[00m"
-# git push
-# in the current version, it's not automatic
-#while true; do
-#  read -p "Do you push local ${destination_branch} to remote ${destination_branch} [Y/n]" answer
-#  case $answer in
-#  '' | [Yy]* )
-#    git push origin ${destination_branch}
-#    break;
-#    ;;
-#  [Nn]* )
-#    echo exit
-#    break;
-#    ;;
-#  * )
-#    echo Please answer Y or N
-#  esac
-#done;

@@ -29,10 +29,5 @@ while [ "$1" != "" ]; do
   esac
 done
 
-if [ -z ${command} ]; then
-  echo "error Usage:"
-else
-  exec "~/.gitmerge/libexec/${command}" ${destination_branch} ${candidate_branches[@]}
-fi
-
+exec "~/.gitmerge/libexec/${command}" ${destination_branch} ${candidate_branches[@]}
 exit 1
