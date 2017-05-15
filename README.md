@@ -18,9 +18,9 @@ sudo yum install git
 # gitmerge Install
 git clone https://github.com/cocoamaemae/gitmerge ~/.gitmerge
 
-echo 'export PATH="$HOME/.gitmerge/bin:$PATH"' >> ~/.bash_profile
+echo 'export PATH="$HOME/.gitmerge/bin:$PATH"' >> ~/.bashrc
 
-source ~/.bash_profile
+source ~/.bashrc
 
 # Usage
 git clone "target git repository path"
