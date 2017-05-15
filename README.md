@@ -35,7 +35,7 @@ gitmerge -d branch -c branch1 branch2 ....
 http://qiita.com/cocoa_maemae/items/5908e3b3699c9cea4e8b
 
 (English)
-TBD
+http://cocoamaemae-tec-diary.blogspot.jp/2017/05/gitmerge-to-automatize-merging-multiple.html
 
 # Liscense
 MIT
