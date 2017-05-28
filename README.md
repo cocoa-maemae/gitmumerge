@@ -1,6 +1,3 @@
-# gitmerge
-Simple wrapper of git clinent. It makes merging git branches easier.
-
 # Requirements
 Currently works only on bash. Cui git client is neccesary.
 
@@ -37,5 +34,3 @@ http://qiita.com/cocoa_maemae/items/5908e3b3699c9cea4e8b
 (English)
 http://cocoamaemae-tec-diary.blogspot.jp/2017/05/gitmerge-to-automatize-merging-multiple.html
 
-# Liscense
-MIT
