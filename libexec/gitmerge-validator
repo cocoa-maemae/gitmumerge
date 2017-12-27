@@ -2,7 +2,7 @@
 set -e
 
 args=$@
-common_msg='Please see help (execute gitmerge with -h or --help)'
+common_msg='Please see help (execute gitmumerge with -h or --help)'
 
 # the number of options check
 if [ $# = 0 ]; then
@@ -71,4 +71,4 @@ if [ $1 = '-d' -o $1 = '--destination' ]; then
   esac
 fi
 
-exec ~/.gitmerge/libexec/gitmerge-parser $args
+exec ~/.gitmumerge/libexec/gitmerge-parser $args

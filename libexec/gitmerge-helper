@@ -1,4 +1,4 @@
-usage="Usage: gitmerge -d(--destination-branch) branch name -c(--candidate-branches) branch name1 name2..."
+usage="Usage: gitmumerge -d(--destination-branch) branch name -c(--candidate-branches) branch name1 name2..."
 d_option="-d,--destination-branch branch name\t\t Specify destination branch"
 c_option="-c,--candidate-branches branch name1 name2...\t Specify candidate branches"
 h_option="-h,--help\t\t\t\t\t Show help"
