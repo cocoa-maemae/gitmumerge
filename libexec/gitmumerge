@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -e
+
+exec ~/.gitmumerge/libexec/gitmerge-validator $@
