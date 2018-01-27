@@ -24,7 +24,7 @@ git clone "target git repository path"
 
 cd "clone directory path"
 
-gitmerge -d branch -c branch1 branch2 ....
+gitmumerge -d branch -c branch1 branch2 ....
 
 # More details
 (Japanese)
