@@ -1,21 +1,21 @@
 # Requirements
 Currently works only on bash. Cui git client is neccesary.
 
-### git client install
-
-(debian)
+# Setup
+## Install git client 
+(debian or ubuntu)
 
 sudo apt-get install git
 
-(redhat)
+(redhat or centos)
 
 sudo yum install git
 
 
-# gitmerge Install
-git clone https://github.com/cocoamaemae/gitmerge ~/.gitmerge
+## Install gitmumerge
+git clone https://github.com/cocoamaemae/gitmumerge ~/.gitmumerge
 
-echo 'export PATH="$HOME/.gitmerge/bin:$PATH"' >> ~/.bashrc
+echo 'export PATH="$HOME/.gitmumerge/bin:$PATH"' >> ~/.bashrc
 
 source ~/.bashrc
 
@@ -24,10 +24,9 @@ git clone "target git repository path"
 
 cd "clone directory path"
 
-
 gitmerge -d branch -c branch1 branch2 ....
 
-### More details
+# More details
 (Japanese)
 http://qiita.com/cocoa_maemae/items/5908e3b3699c9cea4e8b
 
