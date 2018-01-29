@@ -9,3 +9,4 @@ echo -e $d_option
 echo -e $c_option
 echo -e $h_option
 echo -e $v_option
+exit 0

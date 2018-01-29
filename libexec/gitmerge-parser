@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -eu
 
 OPT=`getopt -o dch:v -l destination-branch, candidate-branches, help:,version -- "$@"`
 merge_branches=()
@@ -30,4 +30,3 @@ while [ "$1" != "" ]; do
 done
 
 exec "~/.gitmumerge/libexec/${command}" ${destination_branch} ${candidate_branches[@]}
-exit 1
