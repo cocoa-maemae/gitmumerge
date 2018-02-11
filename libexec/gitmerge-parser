@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eu
+set -e
 
 OPT=`getopt -o dch:v -l destination-branch, candidate-branches, help:,version -- "$@"`
 merge_branches=()

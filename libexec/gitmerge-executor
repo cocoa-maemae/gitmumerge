@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eu
+set -e
 
 destination_branch=$1
 shift

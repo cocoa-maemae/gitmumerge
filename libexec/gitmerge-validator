@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eu
+set -e
 
 args=$@
 common_msg='Please see help (execute gitmumerge with -h or --help)'
