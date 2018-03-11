@@ -1,7 +1,10 @@
+# What's gitmumerge?
+A simple wrapper of git client. To avoid to crush other modifications, it merges multiple git branches mutually. 
+
 # Requirements
 Currently works only on bash. Cui git client is neccesary.
 
-# Setup
+# Configuration
 ## Install git client 
 (debian or ubuntu)
 
