@@ -16,7 +16,7 @@ sudo yum install git
 
 
 ## Install gitmumerge
-git clone https://github.com/cocoamaemae/gitmumerge ~/.gitmumerge
+git clone https://github.com/cocoa-maemae/gitmumerge ~/.gitmumerge
 
 echo 'export PATH="$HOME/.gitmumerge/bin:$PATH"' >> ~/.bashrc
 
